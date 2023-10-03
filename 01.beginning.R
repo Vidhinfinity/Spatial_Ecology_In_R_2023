@@ -22,7 +22,7 @@ paula <- c(100, 500, 600, 1000, 2000) # people
 
 Plot (paula, sophi)
 
-Plot (paula, sophi xlab= "number of people" , ylab= "microplastics" )
+Plot (paula, sophi, xlab= "number of people" , ylab= "microplastics" )
 
 people <- paula
 microplastics <- sophi
