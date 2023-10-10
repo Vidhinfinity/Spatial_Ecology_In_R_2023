@@ -99,7 +99,7 @@ plot(elev)
 # if we want a plot of 2 rows and 1 columns then change the mfrow to 2, 1
 par(mfrow=c (2, 1))
 
-# EXCERCISE to make mf of bei density and elevation 1 is the no. of rows, 3 is the no. of columns in the multiframe.
+# EXCERCISE to make mf of bei density and elevation 1 is the no. of rows, 3 is the no. of columns in the multiframe..
 par(mfrow=c (1, 3))
 plot(bei)
 plot(densitymap)
