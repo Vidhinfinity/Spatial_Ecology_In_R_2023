@@ -28,7 +28,7 @@ im.plotRGB (stacksent, r=3, g=2, b=4) #moving NIr (near infrared) from green to 
 # If we want to see the correlation between two bands say red or green. 
 #if you have a number of variables and wish to see the correlation between them we use the function Pairs.
 
-pairs(stacksent) #the 0.99 or 0.71 values represent the correlation btw bands from resp row and column. graphs represent the frequency of the reflectance.
+pairs(stacksent) #the 0.99 or 0.71 values represent the correlation btw bands from resp row and column. graphs represent the frequency of the reflectance. Scattered plot represent the correlation. more linear means more correlated.
 
 #Difference vegetation index (DVI) 
 #Example: difference btw NIR and Red we get DVR of 80 in 1990 and the same DVR in 2023 is 10. This means that the forest is being destroyed at that specific place.
