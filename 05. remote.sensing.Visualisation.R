@@ -76,7 +76,7 @@ cln <- colorRampPalette(c("brown","yellow","orange")) (100)
 plot (b8, col=cln)
 
 #rgb space
-RGB r is the red color b4, g stands for green b3 and b for blue b2, x is the image
+# RGB r is the red color b3, g stands for green b2 and b for blue b1, x is the image
 # stacksent: 
 #band 2 blue element 1, stacksent [[1]]
 #band 3 green element 2, stacksent [[2]]
