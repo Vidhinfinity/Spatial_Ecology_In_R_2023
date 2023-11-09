@@ -1,4 +1,4 @@
-# Spatial Ecology In R : space
+# Spatial Ecology In R 
 
 ## Student
 Masters in Global Change Ecology and Sustainable Development Goals
