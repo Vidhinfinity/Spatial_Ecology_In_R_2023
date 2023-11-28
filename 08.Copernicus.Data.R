@@ -6,3 +6,4 @@
 #Dry Matter Productivity (DMP) represents the overall growth rate or dry biomass increase of the vegetation.
 #energy, watercycle and cryosphere parameters being discussed.
 
+#login to copernicus > choose a collection > blue arrow for download > pop up window explaining the image information
