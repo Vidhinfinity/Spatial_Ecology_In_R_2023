@@ -78,6 +78,34 @@ p1 <- ggplot(tabout, aes(x=class, y=1992, color=cover)) + geom_bar(stat="identit
 p2 <- ggplot(p, aes(x=cover, y=perc2006, color=cover)) + geom_bar(stat="identity", fill="white"))
 p1+p2
 
+#12dec23
+
+# building the final table
+class <- c("forest", "human")
+y1992 <- c(83, 17)
+y2006 <- c(45, 55) 
+
+tabout <- data.frame(class, y1992, y2006)
+tabout
+
+# final output
+p1 <- ggplot(tabout, aes(x=class, y=y1992, color=class)) + geom_bar(stat="identity", fill="white")
+p2 <- ggplot(tabout, aes(x=class, y=y2006, color=class)) + geom_bar(stat="identity", fill="white")
+p1 + p2 
+
+#different scales are used in the above case to soften the impact of change as the y limit is different in the two graphs.
+
+# final output, rescaled
+p1 <- ggplot(tabout, aes(x=class, y=y1992, color=class)) + geom_bar(stat="identity", fill="white") + ylim(c(0,100))
+p2 <- ggplot(tabout, aes(x=class, y=y2006, color=class)) + geom_bar(stat="identity", fill="white") + ylim(c(0,100))
+p1 + p2
+
+#now, the above graph shows the same limits on the y-axis. The loss of forest detection is done by comparing the two years 1992 and 2006.
+
+
+
+
+
 
 
 
