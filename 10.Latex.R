@@ -17,5 +17,6 @@
 # smallskip and bigskip to add line gaps
 # to change structure like fonts use quadratic parenthesis []
 
-#fromula in latex. begin and end equation. use function frac
-# for subscript _ ; for power ^ ; for multiplication symbol \times ; for square root  \sqrt {}. before argument of sq root put parenthesisi with 3 to get the cube root symbol.
+#formula in latex. begin and end equation. use function frac
+# for subscript _ ; for power ^ ; for multiplication symbol \times ; for square root  \sqrt {}. before an argument of sq root put parenthesis with 3 to get the cube root symbol.
+# working 
