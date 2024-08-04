@@ -1,107 +1,85 @@
-# code related to population ecology
+# Population Ecology Analysis using Spatstat package
 
-# package is needed for point pattern analysis
-
+# Install and load the required package for point pattern analysis
 install.packages("spatstat")
 library(spatstat)
 
-# lets use bei data a dataset in  cran package of spatstat
-# data description: 
-# https://cran.r-project.org/web/packages/spatstat/index.html
+# Use the 'bei' dataset from the spatstat package
+# The 'bei' dataset contains tree locations in a forest plot
+# More details: https://cran.r-project.org/web/packages/spatstat/index.html
 
-# plotting the data
-
+# Plot the tree locations
 plot(bei)
 
-# changing dimensions - cex
+# Modify the plot by changing symbol size (cex)
+plot(bei, cex = 0.5)
+plot(bei, cex = 0.2)
 
-plot(bei, cex= 0.5)
+# Change the plot symbol to a filled circle (pch = 19)
+plot(bei, cex = 0.2, pch = 19)
 
-plot(bei, cex= 0.2)
-
-# changing the symbol tp pch 19
-
-plot(bei, cex= 0.2, pch=19)
-
-# additional dataset
-
-bei.extra
+# Additional dataset: 'bei.extra' which includes elevation data
 plot(bei.extra)
 
-# we need to take only elevation part of dataset
-
-# lets only use one part of dataset : elev. using $ sign to link
-bei.extra$elev
-
-plot(bei.extra$elev)
-
+# we need to take only elevation part of dataset. lets only use one part of dataset : elev. using $ sign to link
+# Extract and plot the elevation data from 'bei.extra'
 elevation <- bei.extra$elev
-
 plot(elevation)
 
-# second method to select elemnt in dtaset. double bracket parentheses as we are dealing with images. for tables we have single parentheses
+# Alternative method to extract elements from a list using double brackets.
+# Double bracket parentheses as we are dealing with images. For tables, we have single parentheses
 elevation2 <- bei.extra[[1]]
 plot(elevation2)
 
 
-### 10oct23
-# working on spatstat. 
-library(spatstat)
-bei
+# Start of a new section (10th October 2023)
+# Continue working with the 'spatstat' package and 'bei' dataset
 
-# all the points are trees in a landscape. we will make a density map of the landscape.
-
-# lets build density map passing from points to a continuous surface
-
+# The 'bei' dataset represents trees in a landscape; we will create a density map
+# Create a density map from point data
 densitymap <- density(bei)
 
-# now we have pixels
-
+# Plot the density map
 plot(densitymap)
 
-# plot points on top of density plot image. merge density and bei plots
+# Overlay the original tree points on the density map
+points(bei, cex = 0.2)
 
-points(bei, cex= .2)
+#Color customization: Avoid using green, blue, and red for colorblind-friendly maps.
+## Daltonic people cant see green blue and red so avoid using these colours in maps.
 
-## daltonic people cant see green blue and red so avoid using these colours in maps. we will change colors using below functions 
+# Create a custom color palette from black to yellow
+cl <- colorRampPalette(c("black", "red", "orange", "yellow"))(100)
+# cl is assigned to function and array of colors and 100 represent the numbers of colors passing.
 
-colorRampPalette
-cl <- colorRampPalette (c("black", "red", "orange", "yellow"))(100)
-cl
+# Plot the density map with the custom color palette
+plot(densitymap, col = cl)
 
-# cl is assigned to function and array of colors and 100 represent the numbers of colors passing
+# Reduce the number of colors to make the map less continuous
+cl <- colorRampPalette (c("black", "red", "orange", "yellow"))(4)  #changing the number from 100 to 4 will lead  to less continous map
+
+# When you google colors in R, go to images, you will get codes for colors. Use them to edit the density map.
+# virdis package for colors. On Google
+plot(bei.extra)  # To obtain variables of elev and grad from the density map
+
+# Lets only use one part of the dataset: elev. Using $ sign to link
+elev <- bei.extra[[1]]  # Method 1
+elevation <- bei.extra$elev  # Method 2
+plot(elev)
 
 
-plot(densitymap, col=cl)  #plotting different color density map
-
-cl <- colorRampPalette (c("black", "red", "orange", "yellow"))(4)  #chnaging the number from 100 to 4 will lead  to less continous map
-
-## when you google colors in R, go to images you wil get codes for colors. use them to edit the density map.
-
-##virdis package for colors. on google
-
-plot(bei.extra) ##to obtain variable of elev and grad from density map
-
-# lets only use one part of dataset : elev. using $ sign to link
-elev <- bei.extra [[1]] #method 1
-elevation <- bei.extra$elev #method 2
-
-plot (elev)
-
-##MULTIFRAME
-## Par function, mutltiframe argument "mf". It is used to plot 2 things together. we are making multiframe of density and elevation
-
-par(mfrow=c (1,2))
-
+## MULTIFRAME
+## Par function, multiframe argument "mf". It is used to plot 2 things together. We are making a multiframe of density and elevation
+par(mfrow = c(1, 2))
 plot(densitymap)
 plot(elev)
 
-# if we want a plot of 2 rows and 1 columns then change the mfrow to 2, 1
-par(mfrow=c (2, 1))
 
-# EXCERCISE to make mf of bei density and elevation 1 is the no. of rows, 3 is the no. of columns in the multiframe..
-par(mfrow=c (1, 3))
+# If we want a plot of 2 rows and 1 column then change the mfrow to 2, 1
+par(mfrow = c(2, 1))
+
+# EXERCISE to make mf of bei density and elevation. 1 is the no. of rows, 3 is the no. of columns in the multiframe
+par(mfrow = c(1, 3))
 plot(bei)
 plot(densitymap)
 plot(elev)
-
