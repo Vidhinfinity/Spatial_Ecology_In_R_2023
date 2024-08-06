@@ -1,45 +1,49 @@
 #external data import
-library(terra) 
-#concept is called working directory. We can set working directory by function called set working directory 
-setwd ("your path")
-#for windows users: change the slash in your path to / 
+# Load the required library
+library(terra)
+
+# Set the working directory to where your data files are located
+# Replace "your path" with the actual path to your data folder
 setwd("C:/Users/HP/Downloads")
 
-#rast is the function to upload the data(image) in the terra library.
-#this is like the im.import function where we put name of image from the data imageRY and assign it to an object.
-naja <- rast("najaf.jpg")  
+# Import the raster image using the `rast` function from the terra package
+naja <- rast("najaf.jpg")
 
-#we can now plot the image, here we use func from terra. name of image an dbands corresponding to RGB image.
-plotRGB (naja, r=1, g=2, b=3)
+# Plot the RGB image
+# r = 1 (Red), g = 2 (Green), b = 3 (Blue) - Adjust according to your image bands
+plotRGB(naja, r = 1, g = 2, b = 3)
 
-#exercise download the second image from same site and import on R
+# Exercise: Download the second image from the same site and import it
 najaaug <- rast("najaf2.jpg")
-plotRGB (najaaug, r=1, g=2, b=3)
+plotRGB(najaaug, r = 1, g = 2, b = 3)
 
-par(mfrow =c(2,1))
-plotRGB (naja, r=1, g=2, b=3)
-plotRGB (najaaug, r=1, g=2, b=3)
+# Create a multi-frame plot to compare the two images side-by-side
+par(mfrow = c(2, 1))
+plotRGB(naja, r = 1, g = 2, b = 3)
+plotRGB(najaaug, r = 1, g = 2, b = 3)
 
-#excercise: multitemporal change detection
-najadif = naja[[1]] - najaaug[[1]]]
-cl <- colorRampPalette("brown", "grey", "orange") (100)
-plot (najadif, col= cl)
+# Exercise: Multitemporal change detection
+# Calculate the difference between the two images (band 1)
+najadif <- naja[[1]] - najaaug[[1]]
 
-#we are going to download our own images. I have chosen drought in Brazil in 2019 vs 2021. It is better to maintain the same name as it will redirect you to the same image in the future of the earth observatory.
+# Define a color palette for the difference plot
+cl <- colorRampPalette(c("brown", "grey", "orange"))(100)
+
+# Plot the difference
+plot(najadif, col = cl)
+
+# Import additional images for Brazil from different years
 brazil <- rast("brazil_oli_2019163_lrg.jpg")
-plotRGB( brazil, r=1, g=2, b=3)
-
 brazil2021 <- rast("brazil_oli_2021168_lrg.jpg")
-plotRGB( brazil2021, r=1, g=2, b=3)
 
-par(mfrow =c(2,1))
-plotRGB( brazil, r=1, g=2, b=3)
-plotRGB( brazil2021, r=1, g=2, b=3)
+# Plot the RGB images for Brazil for the two years
+plotRGB(brazil, r = 1, g = 2, b = 3)
+plotRGB(brazil2021, r = 1, g = 2, b = 3)
 
-#the Mato Grosso image can be downloaded directly from the Earth Observatory as well instead of imagery.
+# Create a multi-frame plot to compare the two Brazil images side-by-side
+par(mfrow = c(2, 1))
+plotRGB(brazil, r = 1, g = 2, b = 3)
+plotRGB(brazil2021, r = 1, g = 2, b = 3)
 
-# ncdf4 package needs to be installed for the next lecture. Lecture on Copernicus on november28. 
-
-
-
-
+# Note: The Mato Grosso image can be downloaded directly from the Earth Observatory.
+# For the next lecture on November 28, make sure to install the `ncdf4` package if needed.
