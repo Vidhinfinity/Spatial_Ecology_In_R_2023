@@ -1,67 +1,64 @@
-#time series analysis
-library (terra)
-library(imagRY)
+# Load necessary libraries
+library(terra)
+library(imageRy)
 
-#we are making a list of images to use.
+# List available images in the working directory
 im.list()
 
-#import the data
-
+# Import the data
 EN01 <- im.import("EN_01.png")
 EN13 <- im.import("EN_13.png")
 
-#creating multi frame
-par(mfrow= c(2,1))
+# Create a multi-frame layout to display the images
+par(mfrow = c(2, 1))
 im.plotRGB.auto(EN01)
 im.plotRGB.auto(EN13)
 
-#diff between the two band images
-diff <-EN01[[1]] - EN13[[1]] #difference in band 1 of image 1 and band 1 of image 13.
+# Calculate the difference between the two images (for band 1)
+diff <- EN01[[1]] - EN13[[1]]
 
-cldif <- colorRampPalette(c('blue','white','red'))(100) 
-plot(diff, col=cldif) #all red parts are those where values are higher in January. 
+# Define a color palette for the difference plot
+cldif <- colorRampPalette(c('blue', 'white', 'red'))(100)
 
-#copernicus: to provide data. Vegetation state, Energy budget, water cycle, cryosphere.
+# Plot the difference
+plot(diff, col = cldif)
 
-##New example: temperature in Greenland
+# Copernicus: to provide data on vegetation state, energy budget, water cycle, cryosphere.
 
-im.list() #to get data
+# Example: Temperature in Greenland
 
-g2000 <-im.import( "greenland.2000.tif" ) #import image
-clg <- colorRampPalette(c('blue','white','red'))(100) #colorpalette
-plot (g2000, col=clg) #plotting graph using image and color palette
+# List available images in the working directory
+im.list()
 
-#importing images from 3 different years
+# Import the Greenland images from different years
+g2000 <- im.import("greenland.2000.tif")
+g2005 <- im.import("greenland.2005.tif")
+g2010 <- im.import("greenland.2010.tif")
+g2015 <- im.import("greenland.2015.tif")
 
-g2005 <-im.import("greenland.2005.tif" )                               
-g2010 <-im.import("greenland.2010.tif" )                               
-g2015 <-im.import("greenland.2015.tif")
-clg <- colorRampPalette(c('black', 'blue','white','red'))(100)
-plot (g2015, col=clg)
+# Define a color palette for the Greenland plots
+clg <- colorRampPalette(c('black', 'blue', 'white', 'red'))(100)
 
+# Plot the 2000 and 2015 Greenland images side by side
+par(mfrow = c(1, 2))
+plot(g2000, col = clg)
+plot(g2015, col = clg)
 
-par(mfrow =c (1,2))
-plot (g2000, col=clg)
-plot (g2015, col=clg)
-
-#making a stack of bands of images, instead of plotting 4 different images, we stack the 4 images in a single step.
-
+# Stack the Greenland images into a single object
 stackg <- c(g2000, g2005, g2010, g2015)
-plot (stackg, col=clg) 
 
-#make difference between first and final elements of the stack
-difg <- stackg [[1]] - stackg [[4]]
-plot( diffg, col= cldiff)
+# Plot the stacked images
+plot(stackg, col = clg)
 
-##Note: on thursday we will work on our own data. How to use data for the exam.
+# Calculate the difference between the first and last elements of the stack
+diffg <- stackg[[1]] - stackg[[4]]
+plot(diffg, col = cldif)
 
-#take image from 2000 and put on red channel, 2005: green, 2010: blue. If high value temp in 2000, they will become red, 
-#simliarly in  2005 these spots will become green and 2010 blue. If the majority area is blue, so we can conclude that the temperature is higher during the final period.
+# Exercise: Make an RGB plot using different years
+# Assign 2000 to red, 2005 to green, and 2010 to blue
+im.plotRGB(stackg, r = 1, g = 2, b = 3)
 
-#Excercise: Make an RGB plot using different years.
-im.plotRGB(stackg, r=1, g=2, b=3)
+# Note: Using satellite images, we can monitor changes in the landscape, making it easier to detect changes over time.
 
-#we have the possibility of seeing changes in the landscape and monitoring such changes by human beings is difficult and if you use satellite images it makes things easier.
-
-#earth observatory  site> search bar > drought> you can download images from 2 different years. # learn how to take image from network, put in computer and use that in analysis.
-
+# Earth Observatory site: Search for 'drought' to find and download images from different years.
+# Learn how to download images from the network, save them on your computer, and use them in analysis.
