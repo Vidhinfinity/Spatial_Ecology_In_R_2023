@@ -1,79 +1,83 @@
-# Why populations disperse over as landscape in a certain manner?
-## Read about Gdal and OSGeo project
-library(sdm)
-library(terra)
-## while installing package we need quotes as we are doing it from outside R. while using library we dont use quotes
+# Why populations disperse over a landscape in a certain manner?
+# This script explores the spatial distribution of species using the SDM package and other tools.
 
-file <- system.file("external/species.shp", package="sdm") # we have a system file, extrernal is the folder, species is the file name, shp is an extension of file name. sdm is the package. 
+## Load required libraries
+library(sdm)   # SDM package for species distribution modeling
+library(terra) # Terra package for spatial data manipulation
 
-# vector files. vector is series of coordinates
+## Note: While installing a package, use quotes around the package name. 
+## When loading a library, quotes are not required.
 
+# Load the species data
+file <- system.file("external/species.shp", package="sdm") 
+# system.file locates the path to the specified file within the package
+# "external" is the folder, "species" is the file name, and "shp" is the file extension for shapefiles
+
+# Read the vector file
 rana <- vect(file)
+# vect reads vector files (series of coordinates) using the Terra package
 
-rana$Occurrence #the 0 represents absence of rana and 1 represents present of an organism in a data in this case is rana.
+# Display occurrence data
+rana$Occurrence 
+# Occurrence column: 0 represents absence, 1 represents presence of the species (Rana in this case)
+
+# Plot the species data
 plot(rana)
-plot(rana, cex=.5) # decreased size of points
+plot(rana, cex=.5) # Reduce the size of points for better visualization
 
-# selecting presences
-pres <- rana[rana$occurrence == 1,] # double = as in sql language we use it like this
+# Select and plot presences
+pres <- rana[rana$Occurrence == 1,] 
+# Select rows where the species is present (Occurrence == 1)
 
-pres
+plot(pres, cex= .5) # Plot presences with reduced point size
 
-plot(pres, cex= .5) #plotting presences
 
-## excercise: select absences and call them abse
+## Exercise: Select absences and call them 'abse'
+abse <- rana[rana$Occurrence == 0,] 
+# Select rows where the species is absent (Occurrence == 0)
+plot(abse) # Plot absences
 
-abse <- rana[rana$Occurrence == 0, ] # , here is used to close sql 
-abse 
-plot(abse)
+## Exercise: Plot presences and absences side by side using a multi-frame layout
+par(mfrow=c(1, 2)) # Set up a plotting area with 1 row and 2 columns
+plot(pres)         # Plot presences
+plot(abse)         # Plot absences
+dev.off()          # Close the graphical device
 
-## Excercise: plotting pres and abse side by side using multiframe
+## Exercise: Plot presences and absences with different colors
+plot(pres, col= "dark blue")   # Plot presences in dark blue
+points(abse, col= "light blue") # Overlay absences in light blue
 
-par(mfrow=c (1, 2))
-plot(pres)
-plot(abse)
-dev.off() # to close the graph use this function
-
-## exercise: plot pres and abse with 2 different colors. first use plot function followed by points function to plot two different graphs on one.
-plot(pres, col= "dark blue")
-points (abse, col= "light blue")
-
-# predictors: environmental variables. rasters are images, previously we deal with points.
-
+# Load environmental predictor variables (rasters)
+# Elevation predictor
 elev <- system.file("external/elevation.asc", package="sdm")
-elevmap <- rast (elev) #from terra package
-revamp
+elevmap <- rast(elev) # Read the elevation raster using Terra package
 plot(elevmap)
-points(pres, cex = .5)
+points(pres, cex = .5) # Overlay presences on the elevation map
 
-## temperature predictor
-
+# Temperature predictor
 temp <- system.file("external/temperature.asc", package="sdm")
-tempmap <- rast (temp) #from terra package
-tempmap
+tempmap <- rast(temp) # Read the temperature raster using Terra package
 plot(tempmap)
-points (pres, cex = .5)
+points(pres, cex = .5) # Overlay presences on the temperature map
 
-## exercise : do the same with vegetation cover "vegetation"
 
+## Exercise: Load and plot the vegetation cover predictor
 vege <- system.file("external/vegetation.asc", package="sdm")
-vegemap <- rast (vege) #from terra package
-vegemap
+vegemap <- rast(vege) # Read the vegetation raster using Terra package
 plot(vegemap)
-points (pres, cex = .5)
+points(pres, cex = .5) # Overlay presences on the vegetation map
 
-#precipitation
+# Precipitation predictor
 prec <- system.file("external/precipitation.asc", package="sdm")
-precmap <- rast (prec) #from terra package
-precmap
+precmap <- rast(prec) # Read the precipitation raster using Terra package
 plot(precmap)
-points (pres, cex = .5)
+points(pres, cex = .5) # Overlay presences on the precipitation map
 
 
-
-##plot multiframe of 2*2 
-
-par(mfrow=c (2, 2))
-
-
-
+## Plot multiple predictors in a 2x2 multi-frame layout
+par(mfrow=c(2, 2)) # Set up a plotting area with 2 rows and 2 columns
+plot(elevmap)     # Plot elevation map
+plot(tempmap)     # Plot temperature map
+plot(vegemap)     # Plot vegetation map
+plot(precmap)     # Plot precipitation map
+dev.off()         # Close the graphical device
