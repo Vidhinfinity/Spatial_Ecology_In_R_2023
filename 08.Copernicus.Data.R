@@ -4,40 +4,49 @@
 #FAPAR (Fraction of Absorbed Photosynthetically Active Radiation): the fraction of the solar radiation absorbed by live leaves for the photosynthesis activity. 
 #NDVI: Normalized Difference Vegetation Index: NDVI = (REF_nir – REF_red)/(REF_nir + REF_red)
 #Dry Matter Productivity (DMP) represents the overall growth rate or dry biomass increase of the vegetation.
-#energy, watercycle and cryosphere parameters being discussed.
+#energy, water cycle and cryosphere parameters being discussed.
 
 #login to Copernicus > choose a collection > blue arrow for download > pop up window explaining the image information
  Data available at:
 # https://land.copernicus.vgt.vito.be/PDF/portal/Application.html
-#library to read the NC files, we have to install package 
-install.packages("ncdf4")
-library(ncdf4) 
 
-#explaining R where the data is going to be stored, we are inside R and we going outside to get the data. 
-#set a working directory with the path of your data. to know the path go to your image, right click, properties. path
+# Load the required libraries
+install.packages("ncdf4")  # Install the ncdf4 package if not already installed
+library(ncdf4)
+library(terra)
 
-setwd ("C:/Users/HP/Downloads")
+# Set the working directory where your data files are located
+setwd("C:/Users/HP/Downloads")  # Replace with the actual path to your data
 
-# newnameoftheobject <- rast ("name of the file here")
-soilm <- rast ("c_gls_SSM1km_201511280000_CEURO_S1CSAR_V1.1.1.nc")
+# Import the raster data from Copernicus (NetCDF format)
+soilm <- rast("c_gls_SSM1km_201511280000_CEURO_S1CSAR_V1.1.1.nc")
 
+# Plot the entire raster dataset to visualize the full extent
 plot(soilm)
-#there are two image elements, but now we take only a single image by using the following fiction
-plot (soilm[[1]])
 
+# Plot the first band of the raster dataset
+plot(soilm[[1]])
+
+# Define a color palette for visualization
 cl <- colorRampPalette(c("red", "orange", "yellow"))(100)
-plot(soilm[[1]], col= cl)
 
-#define a variable, here it is minimum and max longitude and latitude
+# Plot the first band of the raster dataset with the defined color palette
+plot(soilm[[1]], col = cl)
 
-ext <- c (22, 26, 55, 57) #minlong, maxlong, minlat, maxlat .lat is the y axis and long is x-axis pts of plot
-soilmc <- crop (soilm, ext) #used the function "crop" by using the coordinates of longitude and latitude to crop the image
+# Define the extent for cropping: c(minlong, maxlong, minlat, maxlat)
+ext <- c(22, 26, 55, 57)  # Longitude and latitude coordinates
 
-plot (soilmc [[1]], col= cl) #plotting the new image
+# Crop the raster dataset based on the defined extent
+soilmc <- crop(soilm, ext)
 
-#we adownload another image, the idea is thatw e can now crop this image based on previous image, now we have 2 images cropped at different time intervals on same longi and lattitudes
-#new image
+# Plot the cropped raster dataset
+plot(soilmc[[1]], col = cl)
 
-soilm24 <- rast ("c_gls_SSM1km_201511240000_CEURO_S1CSAR_V1.1.1.nc")
-soilmc24 <- crop (soilm, ext)
-plot (soilmc24 [[1]], col= cl)
+# Import and crop another raster dataset
+soilm24 <- rast("c_gls_SSM1km_201511240000_CEURO_S1CSAR_V1.1.1.nc")
+
+# Crop the new raster dataset using the same extent
+soilmc24 <- crop(soilm24, ext)
+
+# Plot the cropped raster dataset for the new image
+plot(soilmc24[[1]], col = cl)
