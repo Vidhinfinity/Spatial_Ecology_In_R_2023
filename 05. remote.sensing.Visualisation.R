@@ -1,86 +1,92 @@
-# 02november2023
+# 02 November 2023
+# This script visualizes remote sensing (RS) data using the imageRy and terra packages
 
-# RS data
+# Load the devtools package, which is used to install packages from GitHub
+library(devtools) 
 
-library(devtools) # packages in R are also called libraries
-
-# install the imageRy package from GitHub
+# Install the imageRy package from GitHub
 install_github("ducciorocchini/imageRy")  # from devtools
 
+# Load the imageRy and terra packages for handling and visualizing satellite imagery
 library(imageRy)
 library(terra)
-# in case you have not terra
+
+# If the terra package is not installed, uncomment the following line:
 # install.packages("terra")
 
-# now we will use a package
-im.list() #all imagry package start will im. #we will use the sentinal data #on the duccio YT channel you can find video on how to download sentinal data
+# List available images in the working directory
+im.list() 
+# All imageRy package functions start with "im."
+# Sentinel data can be used, and instructions on downloading Sentinel data can be found on Duccio Rocchini's YouTube channel
 
-#We have spectral bands of various colors in sentinal 
+# Importing spectral bands from Sentinel-2 data
+# We have spectral bands of various colors in Sentinel-2
 
-# we are importing sentinal band number 2 from the data
+# Import the blue band (band 2) from Sentinel-2 data
 b2 <- im.import("sentinel.dolomites.b2.tif")
 
-# in the console we get the data about this band, coord. ref. : WGS 84 / UTM zone 32N (EPSG:32632) 
-# y axis is the distance from equator 
-# x axis is the distance from central merridean. 
+# The console provides metadata about this band, such as the coordinate reference system: WGS 84 / UTM zone 32N (EPSG:32632)
+# The y-axis represents the distance from the equator
+# The x-axis represents the distance from the central meridian
 
-#for different we will use following finctions
-cl <- colorRampPalette(c("dark grey","grey","light grey")) (100)
-plot(b2, col=cl) we will get a plot based on blue wavelength
+# Define a grayscale color palette for plotting
+cl <- colorRampPalette(c("dark grey","grey","light grey"))(100)
+# Plot the blue band using the defined color palette
+plot(b2, col=cl)
 
-#now we see it with band 3 wavelength
-# import the green band from Sentinel-2 (band 3)
+# Import and plot the green band (band 3) from Sentinel-2 data
 b3 <- im.import("sentinel.dolomites.b3.tif") 
 plot(b3, col=cl)
 
-# import the red band from Sentinel-2 (band 4)
+# Import and plot the red band (band 4) from Sentinel-2 data
 b4 <- im.import("sentinel.dolomites.b4.tif") 
 plot(b4, col=cl)
 
-#EXercise Import the NIR band from sentinel-2 (band 8)
+# Exercise: Import and plot the NIR band (band 8) from Sentinel-2 data
 b8 <- im.import("sentinel.dolomites.b8.tif") 
 plot(b8, col=cl)
 
-#multiframes of four bands in a plots b2 blue, b3 green, b4 red and b8 infrared
-#functions used for multiframe par(mfrow)
-
+# Plot multiple frames of the four bands (b2: blue, b3: green, b4: red, b8: infrared)
+# Use the par() function to set up a multi-frame layout
 par(mfrow= c(2,2))
-plot (b2, col=cl)
-plot (b3, col=cl)
-plot (b4, col=cl)
-plot (b8, col=cl)
+plot(b2, col=cl)
+plot(b3, col=cl)
+plot(b4, col=cl)
+plot(b8, col=cl)
 
-# now we will pack all these 4 plots of 4 bands in a single image
-
-#stack images
+# Stack the four bands into a single image stack
 stacksent <- c(b2, b3, b4, b8)
-dev.off() #it closes devices and graphs. clean slate
 
-plot (stacksent, col=cl)
+# Close all graphical devices and clean the slate
+dev.off() 
 
-plot (stacksent[[4]], col=cl) # to extract the NIr that is the fourth element of this graph we use this function.
+# Plot the stacked image with the defined color palette
+plot(stacksent, col=cl)
 
-#theory on how satellite images work are being taught through ppt
+# Extract and plot the NIR band (fourth element) from the stack
+plot(stacksent[[4]], col=cl) 
 
-#lets use different color palletes for different bands. 
-# Excercise : Plot in a multiframe the bands with different color ramps
+# Theory on how satellite images work can be taught through a PowerPoint presentation
 
+# Exercise: Use different color palettes for different bands and plot them in a multi-frame layout
 par(mfrow= c(2,2))
-clb <- colorRampPalette(c("dark blue","blue","light blue")) (100)
-plot (b2, col=clb)
-clg <- colorRampPalette(c("dark green","green","light green")) (100)
-plot (b3, col=clg)
-clr <- colorRampPalette(c("dark red","red","pink")) (100)
-plot (b4, col=clr)
-cln <- colorRampPalette(c("brown","yellow","orange")) (100)
-plot (b8, col=cln)
+clb <- colorRampPalette(c("dark blue","blue","light blue"))(100)
+plot(b2, col=clb)
+clg <- colorRampPalette(c("dark green","green","light green"))(100)
+plot(b3, col=clg)
+clr <- colorRampPalette(c("dark red","red","pink"))(100)
+plot(b4, col=clr)
+cln <- colorRampPalette(c("brown","yellow","orange"))(100)
+plot(b8, col=cln)
 
-#rgb space
-# RGB r is the red color b3, g stands for green b2 and b for blue b1, x is the image
-# stacksent: 
-#band 2 blue element 1, stacksent [[1]]
-#band 3 green element 2, stacksent [[2]]
-#band 4 red element 3, stacksent [[3]]
-# band 8 NIR element 4, stacksent [[4]]
+# RGB composite image
+# In RGB space, R stands for the red band (b4), G stands for the green band (b3), and B stands for the blue band (b2)
+# stacksent contains the bands: 
+#   band 2 (blue) as element 1: stacksent[[1]]
+#   band 3 (green) as element 2: stacksent[[2]]
+#   band 4 (red) as element 3: stacksent[[3]]
+#   band 8 (NIR) as element 4: stacksent[[4]]
 
-im.plotRGB (stacksent, r=3, g=2, b=1)
+# Create and plot an RGB composite image using the specified bands
+im.plotRGB(stacksent, r=3, g=2, b=1)
+# This function creates an RGB image using the red band (b4), green band (b3), and blue band (b2)
