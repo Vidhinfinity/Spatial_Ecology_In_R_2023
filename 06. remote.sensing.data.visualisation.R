@@ -1,40 +1,49 @@
+# Load the necessary libraries for handling and visualizing satellite imagery
 library(imageRy)
 library(terra)
 
+# List available images in the working directory
 im.list()
 
-b2 <- im.import("sentinel.dolomites.b2.tif")
-b3 <- im.import("sentinel.dolomites.b3.tif")
-b4 <- im.import("sentinel.dolomites.b4.tif")
-b8 <- im.import("sentinel.dolomites.b8.tif")
+# Importing Sentinel-2 bands
+b2 <- im.import("sentinel.dolomites.b2.tif") # Blue band
+b3 <- im.import("sentinel.dolomites.b3.tif") # Green band
+b4 <- im.import("sentinel.dolomites.b4.tif") # Red band
+b8 <- im.import("sentinel.dolomites.b8.tif") # Near-Infrared (NIR) band
 
+# Associate bands with components
+# Stack the imported bands into a single image stack
+stacksent <- c(b2, b3, b4, b8)
 
-#associating bands with components. 
+# RGB space visualization
+# Create RGB images by mapping different bands to the RGB channels
 
-#rgb space
-# RGB r is the red color b3, g stands for green b2 and b for blue b1, x is the image
-# stacksent: 
-#band 2 blue element 1, stacksent [[1]]
-#band 3 green element 2, stacksent [[2]]
-#band 4 red element 3, stacksent [[3]]
-# band 8 NIR element 4, stacksent [[4]]
+# Standard RGB visualization: Red = b4, Green = b3, Blue = b2
+im.plotRGB(stacksent, r=3, g=2, b=1)
 
-im.plotRGB (stacksent, r=3, g=2, b=1)
-im.plotRGB (stacksent, r=4, g=3, b=2) 
-im.plotRGB (stacksent, r=3, g=4, b=2) #violet is bare soil. green is trees. black is shadows 
-im.plotRGB (stacksent, r=3, g=2, b=4) #moving NIr (near infrared) from green to blue, everything reflecting NIR will become blue. all vegetation is blue. 
-#these are the colors of reflectance i.e. the ratio between the incidence and radiance.
+# Enhanced RGB visualization with NIR: Red = NIR, Green = Red, Blue = Green
+im.plotRGB(stacksent, r=4, g=3, b=2)
 
-# If we want to see the correlation between two bands say red or green. 
-#if you have a number of variables and wish to see the correlation between them we use the function Pairs.
+# Visualization with NIR as green: Red = Red, Green = NIR, Blue = Green
+im.plotRGB(stacksent, r=3, g=4, b=2)
+# Violet indicates bare soil, green indicates trees, and black indicates shadows
 
-pairs(stacksent) #the 0.99 or 0.71 values represent the correlation btw bands from resp row and column. graphs represent the frequency of the reflectance. Scattered plot represent the correlation. more linear means more correlated.
+# Visualization with NIR as blue: Red = Red, Green = Green, Blue = NIR
+im.plotRGB(stacksent, r=3, g=2, b=4)
+# Moving NIR from green to blue shows all vegetation as blue
 
-#Difference vegetation index (DVI) 
-#Example: difference btw NIR and Red we get DVR of 80 in 1990 and the same DVR in 2023 is 10. This means that the forest is being destroyed at that specific place.
+# These visualizations show the colors of reflectance, which is the ratio between incidence and radiance.
 
+# Correlation analysis between bands
+# Use the pairs() function to see the correlation between bands
+pairs(stacksent)
+# The 0.99 or 0.71 values represent the correlation between bands from respective rows and columns.
+# The graphs represent the frequency of reflectance.
+# Scatter plots represent the correlation; more linear means more correlated.
 
-
-
-
-
+# Difference Vegetation Index (DVI)
+# Example: The difference between NIR and Red bands
+# If DVI is 80 in 1990 and the same DVI in 2023 is 10, it indicates deforestation in that specific area.
+dvi <- b8 - b4
+plot(dvi, col=colorRampPalette(c("blue", "white", "green"))(100))
+# DVI calculation example; you can visualize it by plotting
