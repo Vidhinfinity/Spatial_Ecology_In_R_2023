@@ -37,16 +37,16 @@ m2006c <- im.classify (m2006, num_clusters=2)
 plot(m2006c) 
 #classes: forest =1 ; human = 2
 
-#step 5: plotting multiframe of both plots
+#step 5: plotting multi frame of both plots
 
 par(mfrow=c(1,2))
 plot(m1992c) 
 plot(m2006c)
 
-# to see the frequency we use below function, to see how many pixels are attaining to forest and how many to humans.
+# to see the frequency we use the below function, to see how many pixels are attaining to a forest and how many to humans.
 f1992c <- freq(m1992c)
 
-#lets extract total number of pixels from images
+# let's extract the total number of pixels from images
 tot1992 <- ncell(m1992c)
 
 #percentage: frequency *100/ total
