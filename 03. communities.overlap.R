@@ -1,41 +1,54 @@
-# overlap: Estimates of Coefficient of Overlapping for Animal Activity Patterns
-# relation among species in time. Kernal density
-library (overlap)
+# Overlap: Estimates of Coefficient of Overlapping for Animal Activity Patterns
+# This script analyzes the temporal activity patterns of different species and their overlap using kernel density estimates.
 
-# data
-data(kerinci)
-summary(kerinci)
+## Load required library
+library(overlap) # Overlap package for analyzing animal activity patterns
 
-# tiger
+# Load and summarize the data
+data(kerinci)  # Load the kerinci dataset provided by the overlap package
+summary(kerinci) # Summarize the dataset to understand its structure and contents
 
+## Analyze activity patterns of tigers
 
-# selecting the first species
-tiger <- kerinci[kerinci$Sps=="tiger",]
-tiger
-summary(tiger)
-head(tiger)
-# The unit of time is the day, so values range from 0 to 1. 
-# The package overlap works entirely in radians: fitting density curves uses trigonometric functions (sin, cos, tan),
-# so this speeds up simulations. The conversion is straightforward: kerinci$Time * 2 * pi
-kerinci$timeRad <- kerinci$Time * 2 * pi
+# Select data for the first species: tiger
+tiger <- kerinci[kerinci$Sps == "tiger",] 
+# Filter rows where the species is "tiger"
 
-# selecting the first species
-tiger <- kerinci[kerinci$Sps=="tiger",]
+summary(tiger) # Summarize the tiger data
+head(tiger)    # Display the first few rows of the tiger data
 
-# selecting the time for the tiger
-timetig <- tiger$timeRad
-densityPlot(timetig, rug=TRUE)
+# The unit of time is the day, so values range from 0 to 1.
+# The overlap package uses radians for fitting density curves (using trigonometric functions like sin, cos, tan).
+# Convert the time to radians for accurate density calculations: kerinci$Time * 2 * pi
+kerinci$timeRad <- kerinci$Time * 2 * pi 
 
-#excercise : select onbly the data on macaque individuals
+# Select time data for tigers in radians
+timetig <- tiger$timeRad 
+# Extract the timeRad column for tigers
 
-macaque  <- kerinci[kerinci$Sps=="macaque",]
-head(macaque)
+# Plot the density of tiger activity
+densityPlot(timetig, rug=TRUE) 
+# Plot the density of tiger activity with rug plot for individual data points
 
-timemac <- macaque$timeRad
-densityPlot(timemac, rug=TRUE)
+## Exercise: Analyze activity patterns of macaque individuals
 
-# here we now use overlap to check the tiger and macaque graph together to see when can tiger predate on monkeys.
+# Select data for the second species: macaque
+macaque <- kerinci[kerinci$Sps == "macaque",] 
+# Filter rows where the species is "macaque"
 
-# overlap!
-overlapPlot(timetig, timemac)
+head(macaque) # Display the first few rows of the macaque data
 
+# Select time data for macaques in radians
+timemac <- macaque$timeRad 
+# Extract the timeRad column for macaques
+
+# Plot the density of macaque activity
+densityPlot(timemac, rug=TRUE) 
+# Plot the density of macaque activity with rug plot for individual data points
+
+# Use overlap to check the activity patterns of tigers and macaques together
+# This helps to identify periods when tigers could potentially predate on macaques.
+
+# Plot the overlapping density of tiger and macaque activity
+overlapPlot(timetig, timemac) 
+# Plot the overlap of tiger and macaque activity patterns
