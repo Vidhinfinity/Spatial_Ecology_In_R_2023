@@ -1,0 +1,137 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{natbib} % For bibliography management
+
+\title{\scriptsize{This is my first documentary in LaTeX}} % Small title
+\title{\Huge{This is my first documentary in LaTeX}} % Large title
+\author{Vidhi Goswami}
+%\date{12 December 2023} % Date written by the writer
+%\date{} % No date
+\usepackage{hyperref} % For hypertext links in the document
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\begin{abstract}
+
+The Road Not Taken
+by Robert Frost
+
+Two roads diverged in a yellow wood,
+And sorry I could not travel both
+And be one traveler, long I stood
+And looked down one as far as I could
+To where it bent in the undergrowth;
+
+Then took the other, as just as fair,
+And having perhaps the better claim,
+Because it was grassy and wanted wear;
+Though as for that the passing there
+Had worn them really about the same,
+
+And both that morning equally lay
+In leaves no step had trodden black.
+Oh, I kept the first for another day!
+Yet knowing how way leads on to way,
+I doubted if I should ever come back.
+
+I shall be telling this with a sigh
+Somewhere ages and ages hence:
+Two roads diverged in a wood, and I—
+I took the one less traveled by,
+And that has made all the difference.
+
+\end{abstract}
+
+\section{Introduction}
+
+The Road Not Taken
+by Robert Frost
+
+Two roads diverged in a yellow wood,
+And sorry I could not travel both
+And be one traveler, long I stood
+And looked down one as far as I could
+To where it bent in the undergrowth;
+
+Then took the other, as just as fair,
+And having perhaps the better claim,
+Because it was grassy and wanted wear;
+Though as for that the passing there
+Had worn them really about the same,
+
+And both that morning equally lay
+In leaves no step had trodden black.
+Oh, I kept the first for another day!
+Yet knowing how way leads on to way,
+I doubted if I should ever come back.
+
+I shall be telling this with a sigh
+Somewhere ages and ages hence:
+Two roads diverged in a wood, and I—
+I took the one less traveled by,
+And that has made all the difference.
+
+\noindent % No indent for this paragraph
+\bigskip % Add big vertical space
+\smallskip % Add small vertical space
+
+\section{Methods}
+
+For this thesis, a formula is used.
+\begin{equation}
+F = G\frac{m_1 m_2}{d^2}
+\label{eqNewton}
+\end{equation}
+
+\begin{equation}
+a = b + c
+\label{eqsum}
+\end{equation}
+
+Starting from equation \ref{eqsum}, as we have seen in section \ref{secIntro}, and as we have seen in equation \ref{eqNewton}, so and so.
+
+\section{Results}
+
+When I look into my inner eyes
+I see the shadow of its shadow;
+When I touch my fingertips
+I feel its vibrations.
+The final output will look like that of Figure \ref{fighelical}.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Helix.svg.png}
+\caption{A helical graph that's cute}
+\label{fighelical}
+\end{figure}
+
+\section{Discussion}
+
+The results found in this thesis are in line with previous experiments.
+
+The main achievements of this thesis can be summarized as follows:
+\begin{itemize}
+    \item Graphical representation of species distributions
+    \item Statistical analysis of uncertainty
+    \item Literature on theme
+\end{itemize}
+
+We might also make use of numbers:
+\begin{enumerate}
+    \item Graphical representation of species distributions
+    \item Statistical analysis of uncertainty
+    \item Literature on theme
+\end{enumerate}
+
+\cite{Anderson2013}
+
+\begin{thebibliography}{999}
+\bibitem[Anderson, K., \& Gaston, 2013]{Anderson2013}
+Anderson, K., \& Gaston, K. J. (2013). The implications of species distributions for conservation management. \textit{Journal of Applied Ecology}, 50(2), 235-246.
+\end{thebibliography}
+
+\end{document}
