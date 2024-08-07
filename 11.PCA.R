@@ -1,51 +1,48 @@
-#multivariate analysis #Dimensionality #Book recommendation: numerical ecology by legendre
-# Take 3 bands of sentinels and compact them into one. principal components : pc 1 and pc2
+# Multivariate analysis #Dimensionality #Book recommendation: Numerical Ecology by Legendre
+# Take 3 bands of Sentinel data and compact them into one. Use principal components: PC1 and PC2.
 
-library(imageRy)
-library(viridis)
-library(terra)
+library(imageRy) # Library for image processing
+library(viridis) # Library for color scales
+library(terra)   # Library for spatial data
 
-im.list()
+im.list() # List available images
 
+# Import Sentinel image
 sent <- im.import("sentinel.png")
-#Pairs function is used to make a plot to see correlation. 1 is  a perfect positive correlation and -1 is a negative correlation. we will take sent data and make pca calculation.
-#perform PCA on  sent
+
+# Pairs function is used to make a plot to see correlation. 1 is a perfect positive correlation and -1 is a negative correlation.
+# Perform PCA on the Sentinel image
 sent.pca <- im.pca(sent)
 
-#isolating pc1
-pc1 <- sentpc$PC1
-plot (pc1)
+# Isolating PC1
+pc1 <- sent.pca$PC1
+plot(pc1) # Plot PC1
 
-#calcualtion std deviation ontop pf pc1
+# Calculation of standard deviation on top of PC1 using a 3x3 moving window
 pc1sd3 <- focal(pc1, matrix(1/9, 3, 3), fun=sd)
-plot (pc1sd3, col= viridis)
+plot(pc1sd3, col=viridis) # Plot with viridis color scale
 
-# 7 by 7
-#calcualtion std deviation ontop pf pc1
+# Calculation of standard deviation on top of PC1 using a 7x7 moving window
 pc1sd7 <- focal(pc1, matrix(1/49, 7, 7), fun=sd)
-plot (pc1sd7, col= viridis)
+plot(pc1sd7, col=viridis) # Plot with viridis color scale
 
-#plotting all graphs together
+# Plotting all graphs together
+par(mfrow=c(2, 3)) # Set up the plotting area to have 2 rows and 3 columns
 
-par(mfrow= c(2, 3)
-im.plotRGB (sent, 2, 1, 3 )
+# Plot the original Sentinel image using bands 2, 1, and 3
+im.plotRGB(sent, r=2, g=1, b=3)
 
-#sd from the variability script
+# Plot the standard deviation from the variability script
+plot(sd3, col=viridis)
+plot(sd7, col=viridis)
+plot(pc1, col=viridis)
+plot(pc1sd3, col=viridis)
+plot(pc1sd7, col=viridis)
 
-plot (sd3, col= viridis)
-plot (sd7, col= viridis)
-plot (pc1, col= viridis)
-plot (pc1sd3, col= viridis)
-plot (pc1sd7, col= viridis)
-
-#staqck all standard deviation layers 
+# Stack all standard deviation layers
 sdstack <- c(sd3, sd7, pc1sd3, pc1sd7)
-plot(sdstack, col=viridis)
+plot(sdstack, col=viridis) # Plot the stack with viridis color scale
 
+# Assign names to the layers in the stack
 names(sdstack) <- c("sd3", "sd7", "pc1sd3", "pc1sd7")
-plot(sdstack, col= viridis)
-
-
-
-
-
+plot(sdstack, col=viridis) # Plot the named stack with viridis color scale
