@@ -14,6 +14,7 @@
 # 09. Classification
 # 10. Variability
 # 11. Principal Component Analysis
+# 12. Colour blind
 
  # Here I can write anything I want! 
 # Basic R operations and plotting examples
