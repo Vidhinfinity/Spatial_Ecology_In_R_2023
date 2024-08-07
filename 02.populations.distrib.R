@@ -1,4 +1,4 @@
-# Why populations disperse over a landscape in a certain manner?
+# Why do populations disperse over a landscape in a certain manner?
 # This script explores the spatial distribution of species using the SDM package and other tools.
 
 ## Load required libraries
