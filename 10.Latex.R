@@ -1,4 +1,4 @@
-# why LaTeX
+# why LaTeX?
 
 ##problem with word:
 + Formulas
