@@ -1,10 +1,10 @@
-# classifying remote sensing data
+# Classifying remote sensing data
 
 # THEORY: Grouping the pixels to make a final class. If you have an image say having forest cover having different parts like water and agriculture, if we take
-# 2 bands for an example like red band for x axis and  NIR band for y. we will see the reflectance in terms of random pixels. water will abosrb all NIR and may relect some red.
-# diff areas will reflect light in diff points. Classes or cluster is a set of individual having similar characteristics.
-# smallest distance to nearest class is calculated to assign a class to an incognito class.
-#you can assign class to different pixels.
+# 2 bands for example like red band for x axis and  NIR band for y. we will see the reflectance in terms of random pixels. water will abosrb all NIR and may relect some red.
+# Different areas will reflect light at different points. Classes or cluster is a set of individuals having similar characteristics.
+# The smallest distance to the nearest class is calculated to assign a class to an incognito class.
+#you can assign classes to different pixels.
 
  # Procedure for classifying remote sensing data
 
@@ -20,7 +20,7 @@ im.classify (sun, num_clusters = 3)
 sunc <- im.classify (sun, num_clusters = 3)
 plot(sunc) #class with yellow area will represent the higher energy which in this case is 1.
 
-# working with mattogosso forest time change # classify satelitte data
+# working with mattogosso forest time change # Classify Satelitte data
 #step 1 : import the images
 m1992 <- im.import ("matogrosso_ast_2006209_lrg.jpg")                   
 m2006 <- im.import ( "matogrosso_l5_1992219_lrg.jpg")
@@ -30,20 +30,20 @@ m1992c <- im.classify (m1992, num_clusters=2)
 plot(m1992c) 
 #classes: forest =1 ; human = 2
 
-#step 4 : same for 2006 image
+#step 4: same for 2006 image
 # step 2 classification
 m2006c <- im.classify (m2006, num_clusters=2)
 # step 3 plot
 plot(m2006c) 
 #classes: forest =1 ; human = 2
 
-#step 5: plotting multi frame of both plots
+#step 5: plotting multi-frame of both plots
 
 par(mfrow=c(1,2))
 plot(m1992c) 
 plot(m2006c)
 
-# to see the frequency we use the below function, to see how many pixels are attaining to a forest and how many to humans.
+# To see the frequency we use the below function, to see how many pixels are attaining to a forest and how many to humans.
 f1992c <- freq(m1992c)
 
 # let's extract the total number of pixels from images
@@ -80,7 +80,7 @@ p1+p2
 
 #12dec23
 
-# building the final table
+# Building the final table
 class <- c("forest", "human")
 y1992 <- c(83, 17)
 y2006 <- c(45, 55) 
@@ -93,24 +93,11 @@ p1 <- ggplot(tabout, aes(x=class, y=y1992, color=class)) + geom_bar(stat="identi
 p2 <- ggplot(tabout, aes(x=class, y=y2006, color=class)) + geom_bar(stat="identity", fill="white")
 p1 + p2 
 
-#different scales are used in the above case to soften the impact of change as the y limit is different in the two graphs.
+# scales are used in the above case to soften the impact of change as the y limit is different in the two graphs.
 
 # final output, rescaled
 p1 <- ggplot(tabout, aes(x=class, y=y1992, color=class)) + geom_bar(stat="identity", fill="white") + ylim(c(0,100))
 p2 <- ggplot(tabout, aes(x=class, y=y2006, color=class)) + geom_bar(stat="identity", fill="white") + ylim(c(0,100))
 p1 + p2
 
-#now, the above graph shows the same limits on the y-axis. The loss of forest detection is done by comparing the two years 1992 and 2006.
-
-
-
-
-
-
-
-
-
-
-
-
-
+#now, the above graph shows the same limits on the y-axis. The loss of forest detection was determined by comparing 1992 and 2006.
