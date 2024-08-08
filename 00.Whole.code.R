@@ -897,6 +897,14 @@ y2006 <- c (16, 83)
 #putting everything together
 tabout <- data.frame (class, y1992, y2006)
 tabout
+# building the output table
+cover <- c("forest", "agriculture") 
+perc1992 <- c(83.08, 16.91)
+perc2006 <- c(45.31, 54.69)
+
+# final table
+p <- data.frame(cover, perc1992, perc2006)
+p
 
 ## final plot # we will make a barplot with tabout
 p1 <- ggplot(tabout, aes(x=class, y=1992, color=cover)) + geom_bar(stat="identity", fill="white"))
