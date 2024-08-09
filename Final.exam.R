@@ -1,10 +1,6 @@
-#This project aimed to detect and quantify changes in land cover, with a specific focus on the degradation of mangrove forests,
-#along the Australian coast between 2014 and 2016. 
-#The analysis involved using various remote sensing and image processing techniques such as NDVI calculation, 
-#Principal Component Analysis (PCA), and classification to assess changes in these critical ecosystems.
-
 # Step 1: Install required packages if not already installed
-install.packages(c("terra", "jpeg", "ggplot2", "viridis", "patchwork", "devtools")) # Install packages for raster data, plotting, and visualization
+install.packages(c("terra", "jpeg", "ggplot2", "viridis", "patchwork")) # Install packages for raster data, plotting, and visualization
+
 
 # Load the necessary packages into the R session
 library(terra)     # For working with raster data
@@ -12,7 +8,12 @@ library(jpeg)      # For reading JPEG images
 library(ggplot2)   # For creating plots
 library(viridis)   # For color palettes
 library(patchwork) # For combining multiple ggplot2 plots
-library(imageRy)   # provides functions for image processing 
+
+# Install devtools if not already installed; useful for package development
+install.packages("devtools")
+
+# Load the imageRy package, which provides functions for image processing (make sure this is correctly installed)
+library(imageRy)
 
 # Set the working directory to where the image files are stored
 setwd("C:/Users/HP/OneDrive/Desktop/Spatial R exam")
@@ -36,7 +37,7 @@ plotRGB(mang2014, r=1, g=2, b=3, main="2014") # Plot the cropped 2014 image
 plotRGB(mang2016, r=1, g=2, b=3, main="2016") # Plot the cropped 2016 image
 
 
-# Step 8: Calculate NDVI (Normalized Difference Vegetation Index)
+# Step 5: Calculate NDVI (Normalized Difference Vegetation Index)
 # NDVI is calculated as (NIR - RED) / (NIR + RED)
 im.plotRGB(mang2014, r=2, g=1, b=3) # Plot the 2014 image for reference
 im.plotRGB(mang2016, r=2, g=1, b=3) # Plot the 2016 image for reference
@@ -95,7 +96,7 @@ print(paste("DVI reduction:", dvi_reduction, "%"))
 # "DVI reduction: 87.27 %"
 
 
-# Step 9: Perform PCA (Principal Component Analysis)
+# Step 6: Perform PCA (Principal Component Analysis)
 # Perform PCA on 2014 and 2016 images
 mang2014.pca <- im.pca(mang2014)
 mang2016.pca <- im.pca(mang2016)
@@ -130,7 +131,7 @@ plot(pc1_diff, main = "Difference in PC1 (2014 - 2016)", col = colorRampPalette(
 pc1_reduction <- sum(pc1_diff[] < 0, na.rm = TRUE) / ncell(pc1_diff) * 100
 print(paste("Percentage of area with reduction in PC1:", round(pc1_reduction, 2), "%"))
 
-# Step 11: Classification
+# Step 7: Classification
 mang2014c <- im.classify(mang2014, num_clusters=2) # Classify the 2014 image into 2 clusters
 mang2014c # Print classification result
 plot(mang2014c) # Plot the classified 2014 image
@@ -165,7 +166,7 @@ layer        value    count
 1 0.0002040816 0.0002040816 86.22653
 2 0.0002040816 0.0004081633 13.77347
 
-# Step 13: Build final output table
+# Build final output table
 class <- c("water", "forest") # Define class names
 y2014 <- c(85, 15) # Percentage of each class in 2014
 y2016 <- c(87, 13) # Percentage of each class in 2016
@@ -182,16 +183,17 @@ p2014 <- c(85, 15)
 p2016 <- c(87, 13)
 p <- data.frame(cover, p2014, p2016) # Create a data frame for plotting
 p
-# Step 14: Create bar plots for class percentages
+# Create bar plots for class percentages
 p1 <- ggplot(tabout, aes(x=class, y=y2014, color=class)) + geom_bar(stat="identity", fill="white") # Plot for 2014
 p2 <- ggplot(tabout, aes(x=class, y=y2016, color=class)) + geom_bar(stat="identity", fill="white") # Plot for 2016
 
 # Combine the plots side by side
 p1 + p2 # Display the plots together
 
-# Step 15: Rescale and plot the final bar plots
+# Rescale and plot the final bar plots
 p1 <- ggplot(tabout, aes(x=class, y=y2014, color=class)) + geom_bar(stat="identity", fill="white") + ylim(c(0,100)) # Rescale for 2014
 p2 <- ggplot(tabout, aes(x=class, y=y2016, color=class)) + geom_bar(stat="identity", fill="white") + ylim(c(0,100)) # Rescale for 2016
 
 # Combine the rescaled plots side by side
 p1 + p2 # Display the rescaled plots together
+
