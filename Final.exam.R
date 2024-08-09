@@ -14,6 +14,9 @@ library(viridis)
 library(patchwork)
 library(imageRy)
 
+#Note: Load the devtools package, which is used to install packages from GitHub
+# Install the imageRy package from GitHub through
+devtools::install_github("ducciorocchini/imageRy")
 
 
 setwd("C:/Users/HP/OneDrive/Desktop/Spatial R exam")
