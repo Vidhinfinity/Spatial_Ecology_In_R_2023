@@ -98,6 +98,16 @@ par(mfrow = c(1, 2))  # Set up a 1x2 plot layout
 plot(pc1_2014, main = "PC1 - 2014", col = viridis::viridis(255))  # Plot PC1 for 2014
 plot(pc1_2016, main = "PC1 - 2016", col = viridis::viridis(255))  # Plot PC1 for 2016
 
+# Calculate the difference between PC1 in 2014 and 2016
+pc1_diff <- pc1_2014 - pc1_2016
+pc1_diff
+
+# Calculate the percentage of pixels with negative changes in PC1
+pc1_reduction <- sum(pc1_diff[] < 0, na.rm = TRUE) / ncell(pc1_diff) * 100
+
+# Print the percentage of reduction
+print(paste("Percentage of area with reduction in PC1:", round(pc1_reduction, 2), "%"))
+
 ## classification
 
 # step 2 classification
