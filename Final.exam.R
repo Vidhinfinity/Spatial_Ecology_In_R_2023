@@ -1,3 +1,8 @@
+#The primary goal of this project is to detect and quantify changes in land cover, 
+#specifically focusing on the degradation of mangrove forests along the Australian coast between 2014 and 2016, 
+#utilizing various remote sensing and image processing techniques to assess changes in these critical ecosystems. 
+#Key techniques include NDVI calculation, Principal Component Analysis (PCA), and image classification.
+
 # Step 1 : Install required packages if not already installed
 install.packages(c("terra", "jpeg", "ggplot2", "viridis", "patchwork"))
 
