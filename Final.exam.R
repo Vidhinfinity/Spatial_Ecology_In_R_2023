@@ -4,7 +4,7 @@
 #Key techniques include NDVI calculation, Principal Component Analysis (PCA), and image classification.
 
 # Step 1 : Install required packages if not already installed
-install.packages(c("terra", "jpeg", "ggplot2", "viridis", "patchwork"))
+install.packages(c("terra", "jpeg", "ggplot2", "viridis", "patchwork","devtools"))
 
 # Load the packages
 library(terra)
@@ -12,11 +12,8 @@ library(jpeg)
 library(ggplot2)
 library(viridis)
 library(patchwork)
-# Install devtools if not already installed
-install.packages("devtools")
-
-# Load the imageRy package
 library(imageRy)
+
 
 
 setwd("C:/Users/HP/OneDrive/Desktop/Spatial R exam")
